@@ -1,0 +1,97 @@
+aid: maystreet
+name: MayStreet
+review:
+  question: Does MayStreet expose a public, self-serve developer API surface?
+  answer: false
+  date: '2026-07-21'
+  reviewer: API Evangelist
+findings:
+  summary: |
+    MayStreet is a sales-gated, entitlement-managed market data infrastructure
+    vendor, not an API-first developer company. Founded 2012, acquired by
+    London Stock Exchange Group (LSEG) in May 2022; maystreet.com now
+    301-redirects through refinitiv.com to LSEG's data feeds marketing page,
+    and no standalone MayStreet website remains. There is no developer portal:
+    docs.maystreet.com and developer.maystreet.com do not resolve (DNS
+    failure), and there is no public signup, pricing, terms, or status page.
+    The only public technical surface is the MayStreet GitHub organization,
+    whose "springboard" example repositories document two real query APIs used
+    inside the entitled Analytics Workbench environment: the High Performance
+    Query (HPQ) streaming WebSocket API (UAT endpoint wss://mdx.uat.maystreet.com
+    named verbatim in the public hpq.py client; production host
+    mdx.maystreet.com resolves in DNS but does not answer public HTTPS) and
+    the Market Data Lake queried via Athena SQL through the Medusa2 Python
+    client. Core delivery is not HTTP at all: Bellport is a C++ feed-handler
+    library consuming direct exchange feeds (on-premises or managed), and the
+    Data Lake stores raw PCAP converted to Parquet flat files, with Refinitiv
+    Tick History reached via Google BigQuery. Authentication is by customer
+    entitlement inside Workbench, not self-serve API keys. No OpenAPI,
+    Swagger, or AsyncAPI specification is published anywhere in the GitHub
+    organization (code search for openapi/swagger returned zero hits), so no
+    spec was harvested. Honest posture: institutional/enterprise, contact
+    sales@maystreet.com, developer evidence public only via GitHub examples.
+  posture: sales-gated
+  parent: London Stock Exchange Group (LSEG), acquired May 2022
+  developerPortal: none
+  selfServeSignup: false
+  authentication: entitlements (Workbench/customer accounts); no public API keys or OAuth docs
+  openapiPublished: false
+  deliveryChannels:
+    - protocol: WebSocket
+      note: HPQ streaming query API; wss://mdx.uat.maystreet.com documented in public springboard code; production mdx.maystreet.com DNS-resolves, not publicly reachable.
+      documented: true
+    - protocol: SQL
+      note: Market Data Lake via AWS Athena SQL and Medusa2 Python client; Refinitiv Tick History via Google BigQuery.
+      documented: true
+    - protocol: FeedHandler
+      note: Bellport C++ feed-handler library for direct exchange feeds, on-premises or managed service; not an HTTP API.
+      documented: true
+    - protocol: FlatFiles
+      note: Raw PCAP capture converted to Parquet, ingested nightly into the Data Lake.
+      documented: true
+    - protocol: REST
+      note: No public REST market data API is documented.
+      documented: false
+probes:
+  - url: https://maystreet.com/
+    status: 301
+    note: Redirects to https://www.refinitiv.com/en/market-data/data-feeds which redirects to https://www.lseg.com/en/data-analytics/market-data/data-feeds (200).
+  - url: https://docs.maystreet.com/
+    status: 0
+    note: DNS does not resolve.
+  - url: https://developer.maystreet.com/
+    status: 0
+    note: DNS does not resolve.
+  - url: https://github.com/maystreet
+    status: 200
+    note: Active GitHub org; springboard repos updated through 2025-2026.
+  - url: https://mdx.maystreet.com/
+    status: 0
+    note: Host resolves in DNS (204.225.64.52) but does not answer public HTTPS; WebSocket service is entitlement-gated.
+  - url: https://www.linkedin.com/company/maystreet
+    status: 999
+    note: LinkedIn bot-blocks probes; page exists as "MayStreet (acquired by LSEG)" per search results.
+sources:
+  - url: https://www.lseg.com/en/media-centre/press-releases/2022/lseg-to-acquire-maystreet
+    type: PressRelease
+    note: LSEG announcement of MayStreet acquisition, May 18 2022.
+  - url: https://github.com/maystreet/workbench-hpq-springboard
+    type: Documentation
+    note: HPQ described as "streaming WebSockets API"; hpq.py names wss://mdx.uat.maystreet.com and wss://mdx.stg.maystreet.com.
+  - url: https://github.com/maystreet/workbench-data-lake-springboard
+    type: Documentation
+    note: Data Lake example queries run inside Analytics Workbench.
+  - url: https://github.com/maystreet/workbench-medusa-springboard
+    type: Documentation
+    note: Medusa2 Python client reaching MayStreet Data Lake (Athena SQL), Refinitiv Tick History and MRN History (BigQuery).
+  - url: https://github.com/maystreet/workbench-bellport-springboard-xdp-v2
+    type: Documentation
+    note: Demonstrates compiling a C++ app against the Bellport feed-handler library.
+actions:
+  openapiHarvested: false
+  reason: |
+    No OpenAPI/Swagger/AsyncAPI document is publicly published by MayStreet;
+    fabricating one is out of scope for bootstrap. The two documented query
+    APIs (HPQ WebSocket, Data Lake/Medusa) were cataloged in apis.yml with
+    their GitHub springboard documentation as humanURL, and the sales-gated
+    posture recorded plainly.

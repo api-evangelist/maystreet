@@ -1,0 +1,35 @@
+generated: '2026-07-22'
+method: searched
+source: https://github.com/maystreet/workbench-hpq-springboard
+access: entitlement-gated
+description: >-
+  MayStreet has no public self-serve sandbox, but the HPQ platform documents
+  a real test surface in its public springboard: separate UAT/staging
+  environments and a dedicated failure-simulation endpoint. All of it sits
+  behind MayStreet/LSEG Analytics Workbench entitlements - nothing here is
+  publicly reachable without a customer account.
+environments:
+  - name: UAT
+    url: wss://mdx.uat.maystreet.com
+    note: >-
+      Default endpoint of the public hpq.py client ("Defaults to the HPQ UAT
+      environment"); selected as the production-side endpoint by url() when
+      API_SERVER_BASE_URL matches "production".
+  - name: staging
+    url: wss://mdx.stg.maystreet.com
+    note: >-
+      Staging environment used with Workbench JWT auth; the client disables
+      TLS peer verification against it (set_untrusted()).
+failure_simulation:
+  endpoint: error
+  description: >-
+    The HPQ API includes an endpoint whose only purpose is to fail for
+    testing: it can unconditionally reject a request with a chosen error
+    message and HTTP status code, or end an accepted streaming response in
+    error either before or after part of the body is transmitted
+    (error.ipynb demonstrates all modalities).
+  source: https://github.com/maystreet/workbench-hpq-springboard/blob/master/error.ipynb
+test_values: []
+notes:
+  - No test credentials, magic values, or fixtures are published; Workbench
+    provisions JWTs (JWT_FILE) per entitled user.

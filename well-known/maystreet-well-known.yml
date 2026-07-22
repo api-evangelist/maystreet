@@ -1,0 +1,32 @@
+generated: '2026-07-22'
+method: searched
+note: >-
+  Probe record only - no /.well-known/ documents were found. maystreet.com
+  301-redirects every path (including well-known paths) into LSEG marketing
+  pages, and the mdx API hosts do not answer public HTTPS. Absence recorded
+  as valid data; no WellKnown pointer is wired because nothing exists.
+hosts:
+  - host: https://maystreet.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 301
+        note: Redirects to https://www.lseg.com/en/data-analytics/market-data/data-feeds (marketing page, not a security.txt).
+      - path: /openapi.json
+        status: 301
+        note: Same catch-all redirect to LSEG data-feeds page.
+  - host: https://mdx.uat.maystreet.com
+    documents:
+      - path: /openapi.json
+        status: 0
+      - path: /swagger.json
+        status: 0
+      - path: /api-docs
+        status: 0
+      - path: /
+        status: 0
+        note: Host does not answer public HTTPS; WebSocket service is entitlement-gated.
+  - host: https://mdx.maystreet.com
+    documents:
+      - path: /
+        status: 0
+        note: Resolves in DNS but does not answer public HTTPS.

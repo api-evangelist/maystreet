@@ -1,0 +1,29 @@
+generated: '2026-07-22'
+method: searched
+source: https://github.com/maystreet/workbench-hpq-springboard
+versioning:
+  scheme: none-published
+  note: >-
+    MayStreet publishes no versioning policy; since the May 2022 LSEG
+    acquisition there is no standalone docs site (maystreet.com redirects to
+    LSEG data-feeds marketing pages).
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    No formal deprecation policy is published, but the public hpq.py client
+    records a live deprecation: "while HPQ has a REST API this is deprecated
+    and therefore this module has no support therefor" - the HPQ REST API is
+    deprecated in favor of the streaming WebSocket API.
+deprecated_surfaces:
+  - surface: HPQ REST API
+    replacement: HPQ streaming WebSocket API (wss://mdx.uat.maystreet.com)
+    evidence: hpq.py module docstring, workbench-hpq-springboard
+status_page: null
+sla: null
+environments:
+  - {name: UAT, url: 'wss://mdx.uat.maystreet.com'}
+  - {name: staging, url: 'wss://mdx.stg.maystreet.com'}
+notes:
+  - No public status page, SLA, or changelog exists; operational lifecycle is
+    managed inside the LSEG/Workbench customer relationship.

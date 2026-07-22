@@ -1,0 +1,67 @@
+generated: '2026-07-22'
+method: searched
+source: https://github.com/maystreet/workbench-hpq-springboard
+scope: >-
+  Cross-cutting request/response semantics of the MayStreet High Performance
+  Query (HPQ) API, as documented in the public workbench-hpq-springboard
+  repository (hpq.py client, README.mdp, pagination.ipynb, error.ipynb,
+  unreliable.ipynb). MayStreet publishes no docs site; these conventions are
+  read from the client library the vendor ships as public example code.
+authentication:
+  style: >-
+    WebSocket connect-time Authorization header - either "Bearer <jwt>"
+    (Workbench-issued JWT) or the proprietary "MayStreet-Data-Lake-Secret"
+    scheme. See authentication/maystreet-authentication.yml.
+transport:
+  protocol: WebSocket (wss)
+  encoding: JSON requests; JSON response body streamed frame-by-frame
+  note: >-
+    Requests are JSON objects sent as WebSocket messages. Responses are
+    arbitrarily large JSON arrays transmitted across WebSocket continuation
+    frames so clients can process results without buffering (the springboard
+    parses element-by-element with ijson). hpq.py notes a legacy HPQ REST API
+    exists but is deprecated.
+request_lifecycle:
+  control_field: query_status
+  states: [scheduled, accepted, error, canceled, complete]
+  description: >-
+    Every control message carries a query_status field. A submitted request is
+    first "scheduled", then "accepted" (or rejected with "error"); the body
+    streams after acceptance; the response terminates with "complete", an
+    in-flight cancel yields "canceled", and a failure after acceptance is a
+    mid-stream error.
+pagination:
+  style: client-side continuation
+  params: [per_page, start_date, start_time]
+  description: >-
+    hpq.py provides Paginator/ContinuedRequest helpers that page results by
+    per_page and resume interrupted responses by re-issuing the request from
+    the last start_date/start_time, deduplicating entries that share a
+    timestamp via message_number sequence comparison (pagination.ipynb,
+    no-follow.ipynb, unreliable.ipynb).
+idempotency:
+  supported: false
+  note: >-
+    Queries are read-only data retrievals; no idempotency-key contract is
+    documented.
+error_envelope:
+  see: errors/maystreet-problem-types.yml
+  description: >-
+    Rejections and mid-stream errors are query_status control messages; the
+    client surfaces them as RejectError / MidStreamError / ProtocolError
+    exceptions.
+timestamps:
+  format: nanosecond epoch timestamps
+  note: hpq.py format_timestamp()/format() helpers convert known timestamp keys for display.
+environments:
+  - name: production
+    url: wss://mdx.uat.maystreet.com
+    note: Named by hpq.py url() for the production Workbench environment (entitlement-gated).
+  - name: staging
+    url: wss://mdx.stg.maystreet.com
+    note: JWT-authenticated; TLS peer verification disabled by the client in this environment.
+cross_links:
+  - authentication/maystreet-authentication.yml
+  - errors/maystreet-problem-types.yml
+  - lifecycle/maystreet-lifecycle.yml
+  - sandbox/maystreet-sandbox.yml

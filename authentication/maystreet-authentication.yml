@@ -1,0 +1,49 @@
+generated: '2026-07-22'
+method: searched
+source: https://github.com/maystreet/workbench-hpq-springboard/blob/master/hpq.py
+docs: https://github.com/maystreet/workbench-hpq-springboard
+summary:
+  types: [http-bearer, custom-header]
+  self_serve: false
+  public_signup: false
+  note: >-
+    All access is entitlement-managed inside the MayStreet/LSEG Analytics
+    Workbench environment; there is no public developer portal, API key
+    signup, or OAuth documentation. The authentication mechanics below are
+    documented only in the public hpq.py client of the
+    workbench-hpq-springboard repository.
+schemes:
+  - name: JWT bearer (Workbench-issued)
+    type: http
+    scheme: bearer
+    bearerFormat: JWT
+    description: >-
+      hpq.py builds "Authorization: Bearer <jwt>" by reading a JWT from the
+      file named in the JWT_FILE environment variable, which is provisioned
+      inside the entitled Analytics Workbench environment. Used against the
+      staging endpoint (wss://mdx.stg.maystreet.com) per
+      create_web_socket_client().
+    sources: [https://github.com/maystreet/workbench-hpq-springboard/blob/master/hpq.py]
+  - name: MayStreet-Data-Lake-Secret header
+    type: apiKey
+    in: header
+    parameter: Authorization
+    description: >-
+      A proprietary "Authorization: MayStreet-Data-Lake-Secret <hex-secret>"
+      header scheme used against the production HPQ environment
+      (wss://mdx.uat.maystreet.com per hpq.py url()). The springboard embeds
+      a demo secret value verbatim (not reproduced here); real secrets are
+      entitlement-provisioned per customer.
+    sources: [https://github.com/maystreet/workbench-hpq-springboard/blob/master/hpq.py]
+environment:
+  - variable: API_SERVER_BASE_URL
+    purpose: Selects production vs staging environment inside Workbench (is_production()).
+  - variable: JWT_FILE
+    purpose: Path to the Workbench-provisioned JWT used for bearer authentication.
+data_lake:
+  note: >-
+    The Market Data Lake is queried through AWS Athena SQL and the Medusa2
+    Python client inside Analytics Workbench; access rides on the Workbench
+    entitlement/session, with no separately documented public credential
+    scheme.
+  sources: [https://github.com/maystreet/workbench-data-lake-springboard]

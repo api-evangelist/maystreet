@@ -13,7 +13,18 @@ description: MayStreet is a low-latency market data infrastructure vendor founde
   with no self-serve signup or public developer portal; the public API surface that
   exists is documented through example "springboard" repositories on the MayStreet
   GitHub organization rather than a docs site.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/maystreet.png
 tags:
 - Financial
 - Market Data
@@ -27,7 +38,7 @@ tags:
 - Feed Handlers
 - PCAP
 created: '2026-07-21'
-modified: '2026-07-21'
+modified: '2026-07-22'
 specificationVersion: '0.19'
 apis:
 - aid: maystreet:maystreet-high-performance-query-api
@@ -74,6 +85,20 @@ apis:
     documented only via springboard example repositories on GitHub; no public REST
     endpoint or self-serve access is documented.
 common:
+- type: DomainSecurity
+  url: security/maystreet-domain-security.yml
+- type: Authentication
+  url: authentication/maystreet-authentication.yml
+- type: Conventions
+  url: conventions/maystreet-conventions.yml
+- type: ErrorCatalog
+  url: errors/maystreet-problem-types.yml
+- type: Sandbox
+  url: sandbox/maystreet-sandbox.yml
+- type: Lifecycle
+  url: lifecycle/maystreet-lifecycle.yml
+- type: LLMsTxt
+  url: llms/maystreet-llms.txt
 - type: Website
   url: https://maystreet.com/
 - type: GitHubOrganization

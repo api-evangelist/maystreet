@@ -1,0 +1,51 @@
+generated: '2026-07-22'
+method: searched
+source: https://github.com/maystreet/workbench-hpq-springboard
+format: websocket-control-messages
+description: >-
+  The HPQ API is a streaming WebSocket query API, so errors are not RFC 9457
+  HTTP problem documents: they are JSON control messages distinguished by the
+  query_status field, documented publicly in the workbench-hpq-springboard
+  repository (error.ipynb and the hpq.py client's exception hierarchy).
+problems:
+  - id: reject
+    query_status: error
+    title: Request rejected
+    description: >-
+      The API rejects a request up-front, before transitioning to the state
+      in which it transmits a response body. The rejection control message
+      carries an error message and an HTTP status code; hpq.py raises
+      RejectError.
+    client_exception: hpq.WebSocketClient.RejectError
+    source: https://github.com/maystreet/workbench-hpq-springboard/blob/master/error.ipynb
+  - id: mid-stream-error
+    query_status: error
+    title: Mid-stream error
+    description: >-
+      Because responses stream, a request already "accepted" can still fail
+      while the body is being transmitted - either immediately (no body
+      transmitted) or after part of the body has been sent. hpq.py raises
+      MidStreamError, retaining the control message that accepted the
+      response.
+    client_exception: hpq.WebSocketClient.MidStreamError
+    source: https://github.com/maystreet/workbench-hpq-springboard/blob/master/error.ipynb
+  - id: protocol-error
+    title: Protocol error
+    description: >-
+      The server transmitted something other than the expected control
+      message at the expected time (e.g. a message without a query_status
+      field); hpq.py raises ProtocolError.
+    client_exception: hpq.WebSocketClient.ProtocolError
+    source: https://github.com/maystreet/workbench-hpq-springboard/blob/master/hpq.py
+  - id: canceled
+    query_status: canceled
+    title: Request canceled
+    description: >-
+      An in-flight request canceled by the client is acknowledged with a
+      query_status of "canceled" instead of the normal state progression.
+    source: https://github.com/maystreet/workbench-hpq-springboard/blob/master/hpq.py
+testing:
+  note: >-
+    The HPQ API ships an "error" endpoint whose only purpose is to fail on
+    demand so clients can exercise every failure modality; see
+    sandbox/maystreet-sandbox.yml.

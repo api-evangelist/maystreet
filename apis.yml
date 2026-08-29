@@ -13,6 +13,17 @@ description: MayStreet is a low-latency market data infrastructure vendor founde
   with no self-serve signup or public developer portal; the public API surface that
   exists is documented through example "springboard" repositories on the MayStreet
   GitHub organization rather than a docs site.
+deliveryModel:
+  model: unknown
+  open_source: false
+  commercial: false
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - none
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: unknown

@@ -35,6 +35,8 @@ accessModel:
   source: []
   generated: '2026-07-22'
   method: derived
+  source:
+  - {url: 'https://maystreet.com/', status: 301, note: 'declared website redirects to https://www.lseg.com/en/data-analytics/market-data/data-feeds — a different registrable domain (maystreet.com -> lseg.com), possible rename or acquisition (probed 2026-09-03, roadmap#169)'}
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/maystreet.png
 tags:
 - Financial

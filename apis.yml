@@ -46,6 +46,18 @@ tags:
 - Low Latency
 - Tick Data
 - Order Book
+- Stocks
+- Options
+- Feed Handlers
+- PCAP
+tags_raw:
+- Financial
+- Market Data
+- Real-Time
+- Trading
+- Low Latency
+- Tick Data
+- Order Book
 - Equities
 - Options
 - Feed Handlers

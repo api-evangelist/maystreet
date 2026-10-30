@@ -1,4 +1,4 @@
-# MayStreet (maystreet)
+# MayStreet
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,74 +66,84 @@
 
 MayStreet is a low-latency market data infrastructure vendor founded in 2012 and acquired by London Stock Exchange Group (LSEG) in May 2022, with maystreet.com now redirecting into LSEG's data feeds pages. The company captures full-depth exchange feeds in raw PCAP form across 300+ venues and sells them through the Bellport feed handler (C++ library, on-premises or managed), a 20+ petabyte Market Data Lake of historical tick data (PCAP/Parquet queried via Athena SQL and the Medusa Python client), the cloud Analytics Workbench (JupyterLab), and the High Performance Query (HPQ) streaming WebSocket API for near-time data. Access is sales-gated and entitlement-managed with no self-serve signup or public developer portal; the public API surface that exists is documented through example "springboard" repositories on the MayStreet GitHub organization rather than a docs site.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/maystreet/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/maystreet/refs/heads/main/apis.yml)
+**Areas:** Finance · Market Data · Real-Time · Trading · Low Latency · Tick Data · Order Book · Stocks · Options · Feed Handlers · PCAP
 
-## Tags
+## MayStreet on APIs.io
 
-- Financial
-- Market Data
-- Real-Time
-- Trading
-- Low Latency
-- Tick Data
-- Order Book
-- Equities
-- Options
-- Feed Handlers
-- PCAP
+Everything profiled for MayStreet is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/maystreet/](https://apis.io/providers/maystreet/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (2)
 
-- **Created:** 2026-07-21
-- **Modified:** 2026-07-21
+- [MayStreet High Performance Query (HPQ) API](https://apis.io/apis/maystreet/maystreet-high-performance-query-api/) — Low-latency, near-time market data query API delivered as a streaming WebSockets service so clients can process arbitrarily-sized result sets frame-by-frame…
+- [MayStreet Market Data Lake Query API](https://apis.io/apis/maystreet/maystreet-data-lake-query-api/) — Query access to MayStreet's 20+ petabyte Market Data Lake of historical exchange data captured as PCAP and converted to Parquet, exposed as Athena SQL plus…
 
-## APIs
+### Published properties
 
-### MayStreet High Performance Query (HPQ) API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Low-latency, near-time market data query API delivered as a streaming WebSockets service so clients can process arbitrarily-sized result sets frame-by-frame without pagination. Publicly documented only through the workbench-hpq-springboard example notebooks and hpq.py client on GitHub, which name the UAT endpoint wss://mdx.uat.maystreet.com (the production mdx.maystreet.com host resolves in DNS but is entitlement-gated and not publicly reachable). Access requires a MayStreet/LSEG Analytics Workbench entitlement.
+#### Security (2)
 
-- **Human URL:** [https://github.com/maystreet/workbench-hpq-springboard](https://github.com/maystreet/workbench-hpq-springboard)
-- **Base URL:** `wss://mdx.uat.maystreet.com`
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Tags
+- [Maystreet Authentication](https://apis.io/security/maystreet/maystreet-authentication/)
+- [Maystreet Domain Security](https://apis.io/security/maystreet/maystreet-domain-security/)
 
-- Market Data
-- WebSocket
-- Streaming
-- Tick Data
-- Near-Time
+## Where to find this API
 
-#### Properties
-
-- [Documentation](https://github.com/maystreet/workbench-hpq-springboard)
-
-### MayStreet Market Data Lake Query API
-
-Query access to MayStreet's 20+ petabyte Market Data Lake of historical exchange data captured as PCAP and converted to Parquet, exposed as Athena SQL plus a growing set of client functions through the Medusa2 Python client library inside Analytics Workbench. The Medusa client also reaches Refinitiv Tick History and Machine Readable News History stores backed by Google BigQuery. Publicly documented only via springboard example repositories on GitHub; no public REST endpoint or self-serve access is documented.
-
-- **Human URL:** [https://github.com/maystreet/workbench-data-lake-springboard](https://github.com/maystreet/workbench-data-lake-springboard)
-
-#### Tags
-
-- Market Data
-- Historical
-- Tick Data
-- SQL
-- Python
-
-#### Properties
-
-- [Documentation](https://github.com/maystreet/workbench-data-lake-springboard)
-- [Documentation](https://github.com/maystreet/workbench-medusa-springboard)
-
-## Common Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://maystreet.com/)
-- [GitHub Organization](https://github.com/maystreet)
-- [LinkedIn](https://www.linkedin.com/company/maystreet)
+- [GitHub](https://github.com/maystreet)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 10.3** — minimal · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 0.0 |
+| Contract governance | 0.0 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 28.6 |
+| Access clarity | 0.0 |
+
+**Agent readiness 5.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 11.1** — Securities & Market Data
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/maystreet/](https://apis.io/providers/maystreet/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for MayStreet: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/maystreet/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
